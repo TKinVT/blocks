@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Londrina+Sketch" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='materialize.css')}}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Blocks</title>
+
+</head>
+
+<body>
+  <style media="screen">
+    h1 {
+      font-family: 'Londrina Sketch', cursive;
+    }
+  </style>
+
+  <div class="container">
+    <div class="row" style="margin-bottom:0px;">
+      <div class="col s12 m8 l5 offset-m2 offset-l4">
+        <h1 style="margin-bottom:0px;">CAN YOU SPELL IT?</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12 m8 l4 offset-l4 offset-m2">
+        <h6 class="grey-text" style="margin-top:0px;margin-bottom:7%;">Check to see what words and phrases you can spell with the letter blocks from Uncle Bob and Aunt Krissie</h6>
+        <span class="" id="result"></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12 m8 l4 offset-l4 offset-m2">
+        <span class="" id="result"></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form col s12 m8 l4 offset-l4 offset-m2">
+        <div class="input-field">
+        <label for="search_term">Phrase to check</label>
+        <input type="text" id="search_term" name="search_term">
+        <button class="btn-large cyan accent-2 waves-effect waves-light black-text" type="submit" id="sub_btn" name="action" onclick="check()" style="width:100%;">Check</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+<script type="text/javascript">
+  function check() {
+    var search_term_var = $('input[name="search_term"]').val()
+    $.getJSON('/check', {
+      search_term: search_term_var
+    }, function(data) {
+      if (data.result == true) {
+        $("#result").text("Yep, you can spell: \"" + (search_term_var) + "\"");
+      }
+      else {
+        $("#result").text("No go...");
+      }
+    });
+  };
+</script>
+<script type="text/javascript">
+  $('#search_term').keypress(function(e) {
+    if (e.which == 13) {
+      $('#sub_btn').click();
+    }
+  });
+</script>
+
+</body>
+</html>
