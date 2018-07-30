@@ -5,12 +5,12 @@ def phraser(search_term):
     blocks = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p]
 
     if len(search_term) < 1 or len(search_term) > len(blocks):
-        return False
+        return False, None
 
     search_term = search_term.replace(' ','').upper()
     for char in search_term:
         if char not in set(all_faces):
-            return False
+            return False, None
     search_term = ordered_term(search_term)
 
     print("Starting search")
@@ -99,11 +99,17 @@ def phraser(search_term):
             letter_index = letter_index + 1
 
     if letter_index == -1:
-        return False
+        return False, ["butt","stuff"]
     else:
+        block_result = []
         for memory in range(len(block_memories)):
-            print("{}, {}".format(block_memories[memory]['letter'],block_memories[memory]['block_used']))
-        return True
+            block_used = block_memories[memory]['block_used']
+            block_letter = block_memories[memory]['letter']
+            block_result.append((block_used, block_letter))
+            print("{}, {}".format(block_letter,block_used))
+        for block in blocks:
+            block_result.append((block, None))
+        return True, block_result
 
 
 if __name__ == '__main__':

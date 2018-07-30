@@ -15,8 +15,27 @@
 
 <body>
   <style media="screen">
-    h1 {
+
+    @font-face {
+        font-family: my_font;
+        src: url('{{ url_for("static", filename="blocka.ttf") }}');
+    }
+
+    h1, h3 {
       font-family: 'Londrina Sketch', cursive;
+    }
+
+    p {
+      font-size: 240%;
+      margin: 0px;
+    }
+
+    .used_letter {
+      color: black;
+    }
+
+    .blocks {
+      font-family: my_font, 'Londrina Sketch', serif;
     }
   </style>
 
@@ -50,6 +69,18 @@
       </div>
     </div>
 
+    <div class="row">
+      <div id="block_result" class="col s12 m8 l4 offset-l4 offset-m2 flow-text" style="font-family:my_font;display:none;">
+        <h3>How to do it:</h3>
+        <div id="blocks_used">
+
+        </div>
+        <div id="blocks_unused">
+
+        </div>
+      </div>
+    </div>
+
   </div>
 
 
@@ -63,9 +94,34 @@
       search_term: search_term_var
     }, function(data) {
       if (data.result == true) {
+        $("#block_result").show()
+        $("p").remove();
         $("#result").text("Yep, you can spell: \"" + (search_term_var) + "\"");
+        var blocks = data.blocks;
+        for (var block in blocks) {
+          var block_letters = blocks[block][0]
+          var txt = "";
+          for (var ltr in block_letters) {
+            if (block_letters[ltr] == blocks[block][1]) {
+              txt = txt + "<span class='used_letter'>" + block_letters[ltr] + "</span>"
+            }
+            else {
+              txt = txt + block_letters[ltr];
+            }
+          }
+          if (blocks[block][1] != null) {
+            $("#blocks_used").append($("<p class ='grey-text'></p>").html(txt));
+
+            console.log($('p:last-child').html());
+          }
+          else {
+            $("#blocks_unused").append($("<p></p>").text(txt)).addClass("grey-text text-lighten-2");
+          }
+        }
       }
       else {
+        $("#block_result").hide()
+        $("p").remove();
         $("#result").text("No go...");
       }
     });
