@@ -13,3 +13,6 @@ def check():
     search = phraser(search_term)
     print(search)
     return jsonify(result=search[0], blocks=search[1])
+
+if __name__ == '__main__':
+    app.run(debug=True)
