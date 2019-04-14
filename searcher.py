@@ -2,7 +2,9 @@ import blocks_data
 
 def phraser(search_term):
     # Declare the blocks we have available to use in spelling our search term
-    blocks = blocks_data.block_set
+    #blocks = [blocks_data.a,blocks_data.b,blocks_data.c,blocks_data.d,blocks_data.e,blocks_data.f,blocks_data.g,blocks_data.h,blocks_data.i,blocks_data.j,blocks_data.k,blocks_data.l,blocks_data.m,blocks_data.n,blocks_data.o,blocks_data.p]
+    blocks = [block for block in blocks_data.block_set]
+    print(len(blocks))
 
     if len(search_term) < 1 or len(search_term) > len(blocks):
         return False, None
@@ -13,8 +15,8 @@ def phraser(search_term):
             return False, None
     search_term = blocks_data.ordered_term(search_term)
 
-    print("Starting search")
-    print("Searching for: {}".format(search_term))
+    # print("Starting search")
+    # print("Searching for: {}".format(search_term))
 
     # Initialize this counting variable, which will keep our place while
     # running through the possibilities.
@@ -37,11 +39,11 @@ def phraser(search_term):
     # paths increment the index
     while letter_index < len(search_term) and letter_index > -1:
 
-        print("---------------------------------------------------------------")
-        print("Starting loop...")
-        print("letter_index: {}".format(letter_index))
-        print("Index value: {}".format(search_term[letter_index]))
-        print("Available blocks: {}".format(len(blocks)))
+        # print("---------------------------------------------------------------")
+        # print("Starting loop...")
+        # print("letter_index: {}".format(letter_index))
+        # print("Index value: {}".format(search_term[letter_index]))
+        # print("Available blocks: {}".format(len(blocks)))
 
         # Declare empty list to store the blocks which have the index value we're
         # loooking for
@@ -51,7 +53,7 @@ def phraser(search_term):
         # so, are there more possibilities or should we keept this train moving
         # back up the line?
 
-        print("This index been searched? {}".format(letter_index in block_memories))
+        # print("This index been searched? {}".format(letter_index in block_memories))
 
         if letter_index in block_memories:
 
@@ -76,7 +78,7 @@ def phraser(search_term):
                     # We'll add it to our list of possible blocks
                     good_blocks.append(block)
 
-        print("How many matching blocks? {}".format(len(good_blocks)))
+        # print("How many matching blocks? {}".format(len(good_blocks)))
 
         # If there were no matching blocks...
         if len(good_blocks) == 0:
@@ -106,7 +108,6 @@ def phraser(search_term):
             block_used = block_memories[memory]['block_used']
             block_letter = block_memories[memory]['letter']
             block_result.append((block_used, block_letter))
-            print("{}, {}".format(block_letter,block_used))
         for block in blocks:
             block_result.append((block, None))
         return True, block_result
@@ -114,4 +115,4 @@ def phraser(search_term):
 
 if __name__ == '__main__':
     import sys
-    print(phraser(sys.argv[1]))
+    print(phraser("test"))

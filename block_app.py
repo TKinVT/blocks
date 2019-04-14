@@ -11,7 +11,7 @@ def index():
 def check():
     search_term = request.args.get('search_term')
     search = phraser(search_term)
-    print(search)
+
     return jsonify(result=search[0], blocks=search[1])
 
 if __name__ == '__main__':
