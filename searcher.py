@@ -1,17 +1,17 @@
-from blocks import *
+import blocks_data
 
 def phraser(search_term):
     # Declare the blocks we have available to use in spelling our search term
-    blocks = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p]
+    blocks = blocks_data.block_set
 
     if len(search_term) < 1 or len(search_term) > len(blocks):
         return False, None
 
     search_term = search_term.replace(' ','').upper()
     for char in search_term:
-        if char not in set(all_faces):
+        if char not in set(blocks_data.all_faces):
             return False, None
-    search_term = ordered_term(search_term)
+    search_term = blocks_data.ordered_term(search_term)
 
     print("Starting search")
     print("Searching for: {}".format(search_term))
