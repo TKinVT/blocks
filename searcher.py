@@ -10,9 +10,20 @@ def phraser(search_term):
         return False, None
 
     search_term = search_term.replace(' ','').upper()
+
+    if '<3' in search_term:
+        search_term= search_term.replace('<3', '')
+        print(search_term)
+        search_term = [char for char in search_term]
+        search_term.append('<3')
+        print(search_term)
+    else:
+        search_term = [char for char in search_term]
+
     for char in search_term:
         if char not in set(blocks_data.all_faces):
             return False, None
+
     search_term = blocks_data.ordered_term(search_term)
 
     # print("Starting search")

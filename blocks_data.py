@@ -25,4 +25,4 @@ def ordered_term(search_term):
     return sorted(search_term, key=lambda letter: freq[letter])
 
 if __name__ == '__main__':
-    print(all_faces)
+    print(ordered_term(['T','T','Y','<3','A']))
