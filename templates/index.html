@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Londrina+Sketch" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Averia+Gruesa+Libre|Averia+Libre|IM+Fell+DW+Pica+SC|Londrina+Sketch" rel="stylesheet">
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='materialize.css')}}">
 
@@ -18,18 +17,8 @@
 <body>
   <style media="screen">
 
-    @font-face {
-        font-family: my_font;
-        src: url('{{ url_for("static", filename="blocka.ttf") }}');
-    }
-
     h1, h3 {
       font-family: 'Londrina Sketch', cursive;
-    }
-
-    p {
-      font-size: 240%;
-      margin: 0px;
     }
 
     .used_letter {
@@ -38,6 +27,24 @@
 
     .blocks {
       font-family: my_font, 'Londrina Sketch', serif;
+    }
+
+    .letter {
+      font-family: 'IM Fell DW Pica SC', serif;
+      font-size: 200%;
+      display: inline-block;
+      border-style: solid #fff2c4;
+      border-radius: 5px;
+      margin-right: 5px;
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+      text-align: center;
+      background-color: #fff7dd;
+    }
+
+    .unused {
+      background-color: #fffbef;
     }
   </style>
 
@@ -66,7 +73,7 @@
     </div>
 
     <div class="row">
-      <div id="block_result" class="col s12 m8 l4 offset-l4 offset-m2 flow-text" style="font-family:my_font;display:none;">
+      <div id="block_result" class="col s12 m8 l4 offset-l4 offset-m2" hidden=True>
         <h3>How to do it:</h3>
         <div id="blocks_used">
 
@@ -94,24 +101,37 @@
         $("p").remove();
         $("#result").text("Yep, you can spell: \"" + (search_term_var) + "\"");
         var blocks = data.blocks;
+        console.log(blocks)
         for (var block in blocks) {
           var block_letters = blocks[block][0]
           var txt = "";
           for (var ltr in block_letters) {
-            if (block_letters[ltr] == blocks[block][1]) {
-              txt = txt + "<span class='used_letter'>" + block_letters[ltr] + "</span>"
+            if (block_letters[ltr] == "<3") {
+              console.log(block_letters[ltr])
+              if (block_letters[ltr] == blocks[block][1]) {
+                txt = txt + "<div class ='letter'><span class='used_letter'>" + "<i class='fas fa-heart'></i>" + "</span></div>"
+              }
+              else {
+                txt = txt + "<div class='letter'>" + "<i class='fas fa-heart'></i>" + "</div>";
+              }
             }
             else {
-              txt = txt + block_letters[ltr];
+              if (block_letters[ltr] == blocks[block][1]) {
+                txt = txt + "<div class ='letter'><span class='used_letter'>" + block_letters[ltr] + "</span></div>"
+              }
+              else {
+                txt = txt + "<div class='letter'>" + block_letters[ltr] + "</div>";
+              }
             }
           }
           if (blocks[block][1] != null) {
             $("#blocks_used").append($("<p class ='grey-text'></p>").html(txt));
 
-            console.log($('p:last-child').html());
+            // console.log($('p:last-child').html());
           }
           else {
-            $("#blocks_unused").append($("<p></p>").text(txt)).addClass("grey-text text-lighten-2");
+            $("#blocks_unused").append($("<p class='grey-text text-lighten-2'></p>").html(txt));
+            $(".text-lighten-2 > .letter").addClass("unused")
           }
         }
       }
